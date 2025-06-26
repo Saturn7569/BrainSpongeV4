@@ -12,7 +12,7 @@ fn main() -> io::Result<()> {
 
     io::stdin().read_line(&mut buf)?;
     
-    println!("Tree:\n{:#?}", parse_bs(&buf).unwrap());
+    println!("Tree:\n{:#?}", parse_bs(&buf.trim()).unwrap());
 
     Ok(())
 }
