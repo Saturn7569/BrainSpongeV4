@@ -3,7 +3,7 @@ use std::fs;
 use clap::Parser;
 use parser::parse_bs;
 
-use crate::{cli::Cli, program::{execute, Instance}, utils::BSError};
+use crate::{cli::Cli, program::{execute, Instance}, utils::{generate_dump, BSError}};
 
 mod parser;
 mod utils;
@@ -20,13 +20,20 @@ fn main() {
 fn real_main() -> Result<(), BSError> {
     let args = Cli::parse();
 
-    let f = fs::read_to_string(args.file).map_err(|e| {
+    let f = fs::read_to_string(&args.file).map_err(|e| {
         BSError::Other(format!("Failed to open file ({})", e))
     })?;
 
     let code = parse_bs(&f)?;
     let mut inst = Instance::new(args.memory);
     execute(&mut inst, &code)?;
+
+    if args.dump {
+        let dump = generate_dump(&inst, 16);
+        fs::write(format!("{}.dump", &args.file), &dump).map_err(|e| {
+            BSError::Other(format!("Failed to write file ({})", e))
+        })?;
+    }
 
     Ok(())
 }

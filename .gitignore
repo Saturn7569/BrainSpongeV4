@@ -1,1 +1,6 @@
+# Rust
 /target
+
+# Tests
+test.bf
+test.bf.dump

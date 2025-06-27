@@ -10,4 +10,8 @@ pub struct Cli {
     /// The starting size of the memory
     #[arg(long, default_value_t = 10000)]
     pub memory: usize,
+
+    /// Generates a memory dump at the end of the program (saves to <filename>.txt)
+    #[arg(long, default_value_t = false)]
+    pub dump: bool,
 }
