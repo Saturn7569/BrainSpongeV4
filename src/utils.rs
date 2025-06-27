@@ -9,9 +9,9 @@ pub enum BSError {
 impl fmt::Display for BSError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            BSError::Unclosed(e) => write!(f, "Unclosed ({})", e),
-            BSError::Syntax(e) => write!(f, "{}", e),
-            BSError::Other(e) => write!(f, "{}", e),
+            BSError::Unclosed(e) => write!(f, "ERROR: Unclosed ({})", e),
+            BSError::Syntax(e) => write!(f, "SYNTAX ERROR: {}", e),
+            BSError::Other(e) => write!(f, "ERROR: {}", e),
         }
     }
 }
