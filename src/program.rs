@@ -34,6 +34,13 @@ pub fn execute(instance: &mut Instance, code: &Vec<ParseTree>) -> Result<(), BSE
                 }
                 stdout().flush().unwrap();
             }
+            ParseTree::NumOut(i) => {
+                let c = instance.mem[instance.ptr] as u8;
+                for _ in 0..*i {
+                    print!("{} ", c);
+                }
+                stdout().flush().unwrap();
+            }
             ParseTree::ByteIn(i) => {
                 let mut buf = [0u8; 1];
                 for _ in 0..*i {

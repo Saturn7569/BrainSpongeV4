@@ -8,6 +8,8 @@ pub enum ParseTree {
     ByteOut(u32),
     ByteIn(u32),
 
+    NumOut(u32),
+
     Left(u32),
     Right(u32),
 
@@ -36,36 +38,11 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
                 }
             }
             match c {
-                '+' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], '+')?;
+                '+' | '-' | '.' | ',' | ';' | '<' | '>' => {
+                    let (tok, tok_i) = get_opers(&txt[idx..], c)?;
                     res.push(tok);
                     idx += tok_i;
-                },
-                '-' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], '-')?;
-                    res.push(tok);
-                    idx += tok_i;
-                },
-                '.' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], '.')?;
-                    res.push(tok);
-                    idx += tok_i;
-                },
-                ',' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], ',')?;
-                    res.push(tok);
-                    idx += tok_i;
-                },
-                '>' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], '>')?;
-                    res.push(tok);
-                    idx += tok_i;
-                },
-                '<' => {
-                    let (tok, tok_i) = get_opers(&txt[idx..], '<')?;
-                    res.push(tok);
-                    idx += tok_i;
-                },
+                }
                 '[' => {
                     let (tok, tok_i) = get_code(&txt[idx + 1..], Some(']'))?;
                     res.push(ParseTree::Loop { contents: tok });
@@ -110,6 +87,7 @@ fn get_opers(txt:&str, oper:char) -> Result<(ParseTree, usize), BSError> {
         '+' => ParseTree::Add(count),
         '-' => ParseTree::Sub(count),
         '.' => ParseTree::ByteOut(count),
+        ';' => ParseTree::NumOut(count),
         ',' => ParseTree::ByteIn(count),
         '>' => ParseTree::Right(count),
         '<' => ParseTree::Left(count),
