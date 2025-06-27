@@ -24,7 +24,7 @@ sudo apt install cargo
 
 Now clone the git repo:
 ```sh
-git clone <TODO>
+git clone https://github.com/Saturn7569/BrainSpongeV4.git
 ```
 
 Finally cd into the directory and run:
