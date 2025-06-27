@@ -7,8 +7,8 @@ pub struct Instance {
     pub mem: Vec<u32>,
 }
 impl Instance {
-    pub fn new() -> Self {
-        Instance { ptr: 0, mem: vec![0u32; 10000] }
+    pub fn new(mem_size:usize) -> Self {
+        Instance { ptr: 0, mem: vec![0u32; mem_size] }
     }
 }
 
