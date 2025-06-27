@@ -19,10 +19,18 @@ fn main() -> io::Result<()> {
             break;
         }
 
-        let code = parse_bs(&buf.trim()).unwrap();
+        let code = parse_bs(&buf.trim());
+        if code.is_err() {
+            println!("{}", code.unwrap_err());
+            continue;
+        }
+
         //println!("{:#?}", code);
         let mut inst = Instance::new();
-        execute(&mut inst, &code);
+        match execute(&mut inst, &code.unwrap()) {
+            Ok(_) => {},
+            Err(e) => println!("{}", e),
+        }
     }
 
     Ok(())

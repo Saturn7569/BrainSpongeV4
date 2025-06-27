@@ -77,6 +77,9 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
         }
     }
 
+    if let Some(end_c) = end {
+        return Err(BSError::Unclosed(format!("expected to close {}", end_c)));
+    }
     Ok((res, idx))
 }
 fn get_opers(txt:&str, oper:char) -> Result<(ParseTree, usize), BSError> {
