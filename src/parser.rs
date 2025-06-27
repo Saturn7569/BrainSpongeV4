@@ -14,6 +14,9 @@ pub enum ParseTree {
     Loop {
         contents: Vec<ParseTree>,
     },
+    Check {
+        contents: Vec<ParseTree>,
+    },
 }
 
 pub fn parse_bs(txt:&str) -> Result<Vec<ParseTree>, BSError>{
@@ -66,6 +69,11 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
                 '[' => {
                     let (tok, tok_i) = get_code(&txt[idx + 1..], Some(']'))?;
                     res.push(ParseTree::Loop { contents: tok });
+                    idx += tok_i + 2; // 1 for '[', 1 for ']'
+                },
+                '{' => {
+                    let (tok, tok_i) = get_code(&txt[idx + 1..], Some('}'))?;
+                    res.push(ParseTree::Check { contents: tok });
                     idx += tok_i + 2; // 1 for '[', 1 for ']'
                 },
                 _ => {

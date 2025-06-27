@@ -58,6 +58,11 @@ pub fn execute(instance: &mut Instance, code: &Vec<ParseTree>) -> Result<(), BSE
                     execute(instance, contents)?;
                 }
             }
+            ParseTree::Check { contents } => {
+                if instance.mem[instance.ptr] == 0 {
+                    execute(instance, contents)?;
+                }
+            },
         }
     }
     Ok(())

@@ -33,6 +33,8 @@ fn real_main() -> Result<(), BSError> {
         fs::write(format!("{}.dump", &args.file), &dump).map_err(|e| {
             BSError::Other(format!("Failed to write file ({})", e))
         })?;
+
+        println!("\nDump saved to {}.dump", &args.file);
     }
 
     Ok(())
