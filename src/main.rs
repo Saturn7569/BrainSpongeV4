@@ -13,8 +13,6 @@ fn main() -> io::Result<()> {
 
     loop {
         buf.clear();
-        print!("> ");
-        io::stdout().flush()?;
 
         io::stdin().read_line(&mut buf)?;
         if buf.trim() == "exit".to_string() {
@@ -22,6 +20,7 @@ fn main() -> io::Result<()> {
         }
 
         let code = parse_bs(&buf.trim()).unwrap();
+        //println!("{:#?}", code);
         let mut inst = Instance::new();
         execute(&mut inst, &code);
     }

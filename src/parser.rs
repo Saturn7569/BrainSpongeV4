@@ -29,7 +29,7 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
             //println!("get_code: {}", c);
             if let Some(end_c) = end {
                 if c == end_c {
-                    return Ok((res, idx + 1)); // +1 to move past end char
+                    return Ok((res, idx)); // +1 to move past end char
                 }
             }
             match c {
