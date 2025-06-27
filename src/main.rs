@@ -7,6 +7,7 @@ use crate::program::{execute, Instance};
 mod parser;
 mod utils;
 mod program;
+mod cli;
 
 fn main() -> io::Result<()> {
     let mut buf = String::new();
