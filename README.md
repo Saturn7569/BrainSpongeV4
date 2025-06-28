@@ -16,6 +16,11 @@ For help run `bs --help`. This will show all the commands and options.
 
 To run a brainsponge file, run `bs --file <filename>`.
 
+## Instructions
+BrainSponge has every instruction that brainf**k has, here are the *cutting edge* new features that BrainSponge brings:
+- `;` - prints the current cell as a number followed by a space (for example `23 `)
+- `{` - runs anything inside `{}` if the current cell is 0
+
 ## Building from source
 If you are on linux or want to build from source to have the latest version, first make sure you have all the dependencies installed. You only need rust (cargo) to build it so on ubuntu you would do:
 ```sh
