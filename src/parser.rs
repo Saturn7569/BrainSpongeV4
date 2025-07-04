@@ -22,10 +22,10 @@ pub enum ParseTree {
 }
 
 pub fn parse_bs(txt:&str) -> Result<Vec<ParseTree>, BSError>{
-    let (res, _) = get_code(txt, None)?;
+    let (res, _) = get_code(txt, None, true)?;
     Ok(res)
 }
-fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSError> {
+fn get_code(txt:&str, end:Option<char>, panic_on_invalid:bool) -> Result<(Vec<ParseTree>, usize), BSError> {
     let mut idx:usize = 0;
     let mut res:Vec<ParseTree> = Vec::new();
     while idx < txt.len() {
@@ -44,17 +44,25 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
                     idx += tok_i;
                 }
                 '[' => {
-                    let (tok, tok_i) = get_code(&txt[idx + 1..], Some(']'))?;
+                    let (tok, tok_i) = get_code(&txt[idx + 1..], Some(']'), true)?;
                     res.push(ParseTree::Loop { contents: tok });
                     idx += tok_i + 2; // 1 for '[', 1 for ']'
                 },
                 '{' => {
-                    let (tok, tok_i) = get_code(&txt[idx + 1..], Some('}'))?;
+                    let (tok, tok_i) = get_code(&txt[idx + 1..], Some('}'), true)?;
                     res.push(ParseTree::Check { contents: tok });
                     idx += tok_i + 2; // 1 for '[', 1 for ']'
                 },
+                '#' => {
+                    let (_, tok_i) = get_code(&txt[idx + 1..], Some('\n'), false)?;
+                    idx += tok_i + 2;
+                }
                 _ => {
-                    idx += 1; // Skip unrecognized characters
+                    if panic_on_invalid {
+                        return Err(BSError::Syntax(format!("Invalid character ({})", c)));
+                    } else {
+                        idx += 1;
+                    }
                 },
             }
         } else {
@@ -63,7 +71,9 @@ fn get_code(txt:&str, end:Option<char>) -> Result<(Vec<ParseTree>, usize), BSErr
     }
 
     if let Some(end_c) = end {
-        return Err(BSError::Unclosed(format!("expected to close {}", end_c)));
+        if panic_on_invalid {
+            return Err(BSError::Unclosed(format!("expected to close {}", end_c)));
+        }
     }
     Ok((res, idx))
 }
