@@ -1,7 +1,7 @@
 use clap::Parser;
 
 #[derive(Parser, Debug)]
-#[command(version, about = "An interpreter / compiler for the BrainSponge programming language", long_about = None)]
+#[command(version = "0.3.0", about = "An interpreter / compiler for the BrainSponge programming language", long_about = None)]
 pub struct Cli {
     /// The file to parse
     #[arg(short, long)]
