@@ -28,6 +28,11 @@ BrainSponge has every instruction that brainf**k has, here are all the *cutting 
 - `{` - Runs anything inside `{}` if the current cell is 0
 - `[` - Starts a loop that loops anything in `[]` until the cell the loop ends on is 0
 
+You can also create comments with `#`
+```bs
++++; # This is a comment
+```
+
 ## Building from source
 If you are on linux or want to build from source to have the latest version, first make sure you have all the dependencies installed. You only need rust (cargo) to build it so on ubuntu you would do:
 ```sh
