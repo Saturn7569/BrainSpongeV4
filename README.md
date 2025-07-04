@@ -1,11 +1,9 @@
 <h1 align="center">BrainSponge v4</h1>
 This is the 4th version of the BrainSponge programming language.
 
-❗***Brainsponge is in very early stages, there are not many features***
-
 ## What is brainsponge?
 BrainSponge is a superset of brainf\*\*k, an esoteric programming language designed to make your brain hurt.
-So far, every valid brainf\*\*k program is a valid BrainSponge program but that will change when new instructions are added.
+It has the same features as brainf\*\*k + some more QOL.
 
 ## Try it out
 So far, there is only a windows build but I will build and test it on linux as well. It is very easy to build it from source.
